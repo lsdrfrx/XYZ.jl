@@ -1,33 +1,16 @@
 module XYZ
-export Atom, parse_atom, read_xyz_file
 
-struct Atom
-	name::String
-	X::Float16
-	Y::Float16
-	Z::Float16
-end
+export AtomNode,
+       Atoms,
+       parse_atom,
+       read_from_xyz,
+       read_from_json,
+       read_from_string,
+       to_xyz,
+       to_json,
+       save
 
-function parse_atom(line::String)::Atom
-	name, x, y, z = filter(x -> !isempty(x), split(line, ' '))
-	Atom(name, parse(Float16, x), parse(Float16, y), parse(Float16, z))
-end
-
-function read_xyz_file(path)::Array{Atom}
-	atoms = []
-	open(path, "r") do f
-		line_number = 0
-
-		atom_count = readline(f)
-		line_number += 1
-		_ = readline(f)
-
-		while ! eof(f)
-			atom = readline(f) |> parse_atom
-			push!(atoms, atom);
-		end
-	end
-	atoms
-end
+include("atom.jl")
+include("io.jl")
 
 end

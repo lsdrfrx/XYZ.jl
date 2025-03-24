@@ -2,5 +2,5 @@ using XYZ
 using Test
 
 @testset "XYZ.jl" begin
-    # Write your tests here.
+  @test typeof(read_xyz_file("input.txt")) == Atoms
 end
